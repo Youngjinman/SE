@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>분실물</title>
+    <style>
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .btn {
+            display: block;
+            width: 200px;
+            padding: 20px;
+            margin: 20px auto;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{lost_items}}" class="btn">분실물 찾기</a>
+        <a href="{{report_lost_item}}" class="btn">분실물 등록</a>
+    </div>
+</body>
+</html>
