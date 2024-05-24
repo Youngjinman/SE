@@ -31,3 +31,18 @@ class FindingLostItems(db.Model):
     photo = db.Column(db.String(255))
     create_date = db.Column(db.DateTime, default=db.func.current_timestamp())
     reward = db.Column(db.Integer, default=0)
+
+class ChattingRoom(db.Model):
+    __tablename__ = 'chatting_room'
+    room_id = db.Column(db.Integer,primary_key=True, autoincrement=True)
+    reporter_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+class ChattingMessage(db.Model):
+    __tablename__ = 'chatting_message'
+    message_id = db.Column(db.Integer,primary_key=True, autoincrement=True)
+    chattingroom_id = db.Column(db.Integer, db.ForeignKey('chatting_room.room_id'), nullable=False)
+    message = db.Column(db.String(255))
+    date = db.Column(db.DateTime)
+    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
