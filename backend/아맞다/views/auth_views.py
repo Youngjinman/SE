@@ -10,7 +10,13 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/signup/', methods=('GET', 'POST'))
 def signup():
-    form = UserCreateForm()
+    data = {
+    "username": "john_doe",
+    "email": "john@example.com",
+    "password1": "password123",
+    "password2": "password123"
+    }
+    form = UserCreateForm(data)
     if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if not user:
