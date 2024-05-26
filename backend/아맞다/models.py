@@ -44,5 +44,5 @@ class ChattingMessage(db.Model):
     chattingroom_id = db.Column(db.Integer, db.ForeignKey('chatting_room.room_id'), nullable=False)
     message = db.Column(db.String(255))
     date = db.Column(db.DateTime)
-    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
