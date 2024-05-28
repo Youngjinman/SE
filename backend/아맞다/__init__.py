@@ -24,6 +24,5 @@ def create_app():
     from .views import auth_views, main_views
     app.register_blueprint(main_views.bp)
     app.register_blueprint(auth_views.bp)
-    
-    
+
     return app
