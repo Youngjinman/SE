@@ -4,6 +4,7 @@ from werkzeug.utils import redirect
 from flask_wtf.csrf import generate_csrf
 import secrets
 from flask_mail import Message
+from flask import make_response
 
 from 아맞다 import db
 from 아맞다.forms import UserCreateForm, UserLoginForm
@@ -65,6 +66,8 @@ def send_verification_email():
 
     return jsonify({'message': 'Verification email sent successfully'}), 200
 
+from flask import make_response
+
 @bp.route('/login/', methods=('GET', 'POST'))
 def login():
     data = request.json
@@ -77,11 +80,15 @@ def login():
         elif not check_password_hash(user.password, data['password']):
             error = "비밀번호가 올바르지 않습니다."
         if error is None:
-            session.clear()
-            session['user_id'] = user.id
-            return jsonify({'success': 'User login successfully'})
+            # session.clear()
+            # session['user_id'] = user.id
+            
+            # 쿠키 설정
+            response = jsonify({'success': 'User login successfully'})
+            response.set_cookie('user_id', str(user.id))
+            return response, 201
         else:
-            return jsonify({'error':error})
+            return jsonify({'error':error}), 400
 
 def generate_verification_code():
     # Generate a random 6-digit verification code

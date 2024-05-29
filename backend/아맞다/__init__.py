@@ -25,8 +25,9 @@ def create_app():
 
     from . import models
     
-    from .views import auth_views, main_views
+    from .views import auth_views, find_views, main_views
     app.register_blueprint(main_views.bp)
     app.register_blueprint(auth_views.bp)
+    app.register_blueprint(find_views.bp)
 
     return app
