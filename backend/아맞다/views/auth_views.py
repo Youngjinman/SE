@@ -5,6 +5,7 @@ from flask_wtf.csrf import generate_csrf
 import secrets
 from flask_mail import Message
 from flask import make_response
+from datetime import datetime, timedelta
 
 from 아맞다 import db
 from 아맞다.forms import UserCreateForm, UserLoginForm
@@ -14,16 +15,19 @@ import config
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+user2code = {}
+
 @bp.route('/signup/', methods=('GET', 'POST'))
 def signup():
-    data = request.json
+    data = request.json.get('data')
     email = data.get('email')
     user_verification = data.get('verification_code')
     username = data.get('username')
     password1 = data.get('password1')
     password2 = data.get('password2')
+    #print(session.get('verification_code')
 
-    if user_verification != session.get('verification_code'):
+    if user_verification != user2code[email]: #session.get('verification_code'):
         return jsonify({'error': 'verification unmatched'}), 400
 
     # Check if username already exists
@@ -43,14 +47,14 @@ def signup():
 
 @bp.route('/send-verification-email/', methods=['POST'])
 def send_verification_email():
-    data = request.json
+    data = request.json.get('data')
     email = data.get('email')
 
     if '@' not in email:
         return jsonify({'error': 'email form invalid'}), 400
         
     domain = email.split('@')[1]
-    if domain != 'skku.edu':
+    if domain != 'skku.edu' and domain != 'g.skku.edu':
         return jsonify({'error': 'email should skku'}), 400
 
     if User.query.filter_by(email=email).first():
@@ -58,9 +62,8 @@ def send_verification_email():
     
     # Generate verification code
     verification_code = generate_verification_code()
-    session['verification_code'] = verification_code
-    print(verification_code)
-
+    # session['verification_code'] = verification_code
+    user2code[email] = verification_code
     # Send verification email
     send_verification_email(email, verification_code)
 
@@ -70,7 +73,7 @@ from flask import make_response
 
 @bp.route('/login/', methods=('GET', 'POST'))
 def login():
-    data = request.json
+    data = request.json.get('data')
     if request.method == 'POST':
         error = None
         user = User.query.filter_by(username=data['username']).first()
@@ -84,8 +87,10 @@ def login():
             # session['user_id'] = user.id
             
             # 쿠키 설정
-            response = jsonify({'success': 'User login successfully'})
-            response.set_cookie('user_id', str(user.id))
+            expire_date = datetime.now() + timedelta(days=7)
+            response = jsonify({'success': 'User login successfully', "userid": user.id})
+            response = make_response(response)
+            response.set_cookie('user_id', str(user.id), path='/')
             return response, 201
         else:
             return jsonify({'error':error}), 400

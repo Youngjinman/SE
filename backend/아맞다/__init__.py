@@ -2,6 +2,8 @@ from flask import Flask, render_template
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
+from flask_cors import CORS
+import logging
 
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -17,6 +19,7 @@ mail = Mail()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(config)
+    CORS(app, resources={r"/*":{"origins": "*"}}, supports_credentials=True)
 
     # ORM
     db.init_app(app)

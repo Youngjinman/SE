@@ -1,0 +1,7 @@
+[2024-05-31 03:31:58 +0000] [12812] [INFO] Starting gunicorn 22.0.0
+[2024-05-31 03:31:58 +0000] [12812] [INFO] Listening at: http://0.0.0.0:8000 (12812)
+[2024-05-31 03:31:58 +0000] [12812] [INFO] Using worker: sync
+[2024-05-31 03:31:58 +0000] [12813] [INFO] Booting worker with pid: 12813
+[2024-05-31 03:33:49 +0000] [12812] [INFO] Handling signal: int
+[2024-05-31 03:33:49 +0000] [12813] [INFO] Worker exiting (pid: 12813)
+[2024-05-31 03:33:49 +0000] [12812] [INFO] Shutting down: Master
