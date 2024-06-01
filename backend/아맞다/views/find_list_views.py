@@ -7,7 +7,7 @@ bp = Blueprint('find_list', __name__, url_prefix='/profile')
 
 @bp.route('/find_list/', methods=['GET']) #내가 잃어버린 물건 리스트
 def find_list():
-    user_id = request.form.get('user_id')
+    user_id = request.args.get('user_id')
     if not user_id:
         return jsonify({'error': 'user not login'}), 400
 
@@ -18,7 +18,7 @@ def find_list():
 
 @bp.route('/report_list/', methods=['GET']) #내가 찾은 물건 리스트
 def report_list():
-    user_id = request.form.get('user_id')
+    user_id = request.args.get('user_id')
     if not user_id:
         return jsonify({'error': 'user not login'}), 400
 

@@ -24,7 +24,7 @@ def register():
         # 'photo' 필드가 없다면 pass
         photo = request.files['photo']
         photo_filename = secure_filename(photo.filename)
-        photo_path = os.path.join('uploads/find', photo_filename)
+        photo_path = os.path.join('/var/www/html',photo_filename)
         photo.save(photo_path)
     else:
         photo_filename = None
@@ -72,7 +72,7 @@ def report():
         # 'photo' 필드가 없다면 pass
         photo = request.files['photo']
         photo_filename = secure_filename(photo.filename)
-        photo_path = os.path.join('uploads/report', photo_filename)
+        photo_path = os.path.join('/var/www/html',photo_filename)
         photo.save(photo_path)
     else:
         photo_filename = None
