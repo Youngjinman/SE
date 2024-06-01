@@ -1,4 +1,4 @@
-from flask import Blueprint, url_for, render_template, flash, request, session, jsonify
+from flask import Blueprint, flash, request, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 from flask_wtf.csrf import generate_csrf
@@ -6,6 +6,7 @@ import secrets
 from flask_mail import Message
 from flask import make_response
 from datetime import datetime, timedelta
+from flask_session import Session
 
 from 아맞다 import db
 from 아맞다.forms import UserCreateForm, UserLoginForm
@@ -84,13 +85,15 @@ def login():
             error = "비밀번호가 올바르지 않습니다."
         if error is None:
             # session.clear()
-            # session['user_id'] = user.id
+            #session['user_id'] = user.id
+            #print(session.get('user_id'))
+
+          #  print(server_sessionsession)
             
             # 쿠키 설정
-            expire_date = datetime.now() + timedelta(days=7)
             response = jsonify({'success': 'User login successfully', "userid": user.id})
-            response = make_response(response)
-            response.set_cookie('user_id', str(user.id), path='/')
+            # response = make_response(response)
+            # response.set_cookie('user_id', str(user.id))
             return response, 201
         else:
             return jsonify({'error':error}), 400

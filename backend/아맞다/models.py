@@ -18,6 +18,7 @@ class ReportLostItem(db.Model):
     time = db.Column(db.DateTime)
     photo = db.Column(db.String(255))
     create_date = db.Column(db.DateTime, default=db.func.current_timestamp())
+    is_found = db.Column(db.Boolean, default=False)
 
 class FindingLostItems(db.Model):
     find_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -31,6 +32,7 @@ class FindingLostItems(db.Model):
     photo = db.Column(db.String(255))
     create_date = db.Column(db.DateTime, default=db.func.current_timestamp())
     reward = db.Column(db.Integer, default=0)
+    is_found = db.Column(db.Boolean, default=False)
 
 class ChattingRoom(db.Model):
     __tablename__ = 'chatting_room'
