@@ -40,7 +40,7 @@ def recommend(find_id):
 
     rows = ReportLostItem.query.filter_by(item=item).all()
     recommend_list = []
-    candidates = [{'report_id' : row.report_id, 'item' : row.item, 'time' : row.time, 'color' : row.color, 'contents' : row.contents, 'manufacturer' : row.manufacturer, 'location' : row.location}for row in rows]
+    candidates = [{'report_id' : row.report_id, 'user_id' : row.user_id, 'item' : row.item, 'time' : row.time, 'color' : row.color, 'contents' : row.contents, 'manufacturer' : row.manufacturer, 'location' : row.location} for row in rows]
     for candidate in candidates:
         if abs(candidate['time'] - time).days > 5:
             continue
@@ -51,6 +51,7 @@ def recommend(find_id):
         if editdistance.eval(candidate['location'], location) > 3:
             continue
         candidate['edidistance'] = editdistance.eval(candidate['contents'], contents)
+        candidate['username'] = User.query.filter_by(id=candidate['user_id']).first().username
         recommend_list.append(candidate)
     
     recommend_list = sorted(recommend_list, key=lambda x: x['edidistance'])

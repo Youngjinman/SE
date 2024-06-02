@@ -4,7 +4,7 @@ SECRET_KEY = "super_secret"
 SESSION_TYPE = 'filesystem'
 SESSION_PERMANENT = False
 SESSION_USE_SIGNER = True
-    
+
 # Flask-Mail 설정
 MAIL_SERVER = 'smtp.gmail.com'  # 이메일 서버 호스트
 MAIL_PORT = 465  # 이메일 서버 포트

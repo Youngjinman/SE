@@ -8,6 +8,7 @@ from flask_session import Session
 
 bp = Blueprint('report', __name__, url_prefix='/report')
 
+
 #잃어버린 물건 등록
 @bp.route('/lost/', methods=['GET', 'POST'])
 def register():
