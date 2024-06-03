@@ -55,7 +55,7 @@ def recommend(find_id):
     recommend_list = []
     candidates = [{'report_id' : row.report_id, 'user_id' : row.user_id, 'item' : row.item, 'time' : row.time, 'color' : row.color, 'contents' : row.contents, 'manufacturer' : row.manufacturer, 'location' : row.location} for row in rows]
     for candidate in candidates:
-        if candidate['user_id'] == user_id:
+        if candidate['user_id'] == int(user_id):
             continue
         if abs(candidate['time'] - time).days > 5:
             continue
